@@ -11,7 +11,8 @@ from transformers import AutoModel
 from annotator.util import resize_image, HWC3
 from diffusers import (ControlNetModel, DiffusionPipeline,
                        StableDiffusionControlNetPipeline,
-                       UniPCMultistepScheduler)
+                       UniPCMultistepScheduler, DEISMultistepScheduler,
+                       EulerAncestralDiscreteScheduler)
 
 CONTROLNET_MODEL_IDS = {
     'Openpose': 'lllyasviel/control_v11p_sd15_openpose',
@@ -31,7 +32,11 @@ CONTROLNET_MODEL_IDS = {
 
 config_dict = {
     'runwayml/stable-diffusion-v1-5': 'lllyasviel/control_v11p_sd15_canny',
-    'stabilityai/stable-diffusion-2-1': 'thibaud/controlnet-sd21'
+    'darkstorm2150/Protogen_x5.8_Official_Release': 'lllyasviel/control_v11p_sd15_canny',
+    'wavymulder/modelshoot': 'lllyasviel/control_v11p_sd15_canny',
+    'stabilityai/stable-diffusion-2-1-base': 'thepowefuldeez/sd21-controlnet-canny',
+    'DGSpitzer/Cyberpunk-Anime-Diffusion': 'lllyasviel/control_v11p_sd15_canny',
+    # 'thibaud/controlnet-sd21'
     # 'shgao/edit-anything-v0-4-sd21'
 }
 
@@ -53,14 +58,14 @@ class Model:
             return self.pipe
 
         model_id = CONTROLNET_MODEL_IDS[task_name]
-        controlnet = ControlNetModel.from_pretrained(config_dict[base_model_id],
-                                                     torch_dtype=torch.float16)
+        controlnet = ControlNetModel.from_pretrained(config_dict[base_model_id])
         pipe = StableDiffusionControlNetPipeline.from_pretrained(
             base_model_id,
             safety_checker=None,
             controlnet=controlnet,
-            torch_dtype=torch.float16)
-        pipe.scheduler = UniPCMultistepScheduler.from_config(
+            # torch_dtype=torch.float16
+            )
+        pipe.scheduler = EulerAncestralDiscreteScheduler.from_config(
             pipe.scheduler.config)
         # if self.device.type == 'cuda':
             # pipe.enable_xformers_memory_efficient_attention()
