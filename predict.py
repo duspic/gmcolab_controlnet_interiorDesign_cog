@@ -25,10 +25,7 @@ class Predictor(BasePredictor):
                             choices=["RED", "ORANGE", "GREEN", "BEIGE"],
                             default="RED"
                         ),
-        house_plants: str = Input(choices=['YES', 'NO'],
-                                  default='YES')
-        
-
+    
     ) -> List[Path]:
         """Run a single prediction on the model"""
 
@@ -36,8 +33,6 @@ class Predictor(BasePredictor):
         input_image = np.array(input_image)        
 
         prompt = dominant_color
-        if house_plants == 'YES':
-            prompt = f"{prompt}, house plants"
         outputs = self.model.process_canny(
             input_image,
             prompt,

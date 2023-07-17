@@ -149,7 +149,7 @@ class Model:
         image_resolution: int = 512,
         num_steps: int = 30,
         guidance_scale: float = 7.9,
-        seed: int = -1,
+        seed: int = 1,
         low_threshold: int = 100,
         high_threshold: int = 200,
     ) -> list[PIL.Image.Image]:
