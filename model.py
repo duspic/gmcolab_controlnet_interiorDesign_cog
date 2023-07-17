@@ -31,7 +31,7 @@ CONTROLNET_MODEL_IDS = {
 }
 
 config_dict = {
-    'runwayml/stable-diffusion-v1-5': 'lllyasviel/control_v11p_sd15_canny',
+    'ducnapa/InteriorDesignSuperMixV2': 'lllyasviel/control_v11p_sd15_canny',
     'darkstorm2150/Protogen_x5.8_Official_Release': 'lllyasviel/control_v11p_sd15_canny',
     'wavymulder/modelshoot': 'lllyasviel/control_v11p_sd15_canny',
     'stabilityai/stable-diffusion-2-1-base': 'thepowefuldeez/sd21-controlnet-canny',
@@ -43,11 +43,11 @@ config_dict = {
 
 class Model:
     def __init__(self,
-                 base_model_id: str = 'runwayml/stable-diffusion-v1-5',
+                 base_model_id: str = 'ducnapa/InteriorDesignSuperMixV2',
                  task_name: str = 'canny'):
         self.device = torch.device(
             'cuda:0' if torch.cuda.is_available() else 'cpu')
-        self.base_model_id = ''
+        self.base_model_id = 'ducnapa/InteriorDesignSuperMixV2'
         self.task_name = ''
         self.pipe = self.load_pipe(base_model_id, task_name)
         # self.preprocessor = Preprocessor()
