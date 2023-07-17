@@ -46,7 +46,7 @@ class Predictor(BasePredictor):
         image_resolution = '512'
         ddim_steps = 30,
         scale = 7,
-        seed = -1,
+        seed:int = -1,
         a_prompt = A_PROMPT,
         n_prompt = N_PROMPT,
         input_image = Image.open(image)
