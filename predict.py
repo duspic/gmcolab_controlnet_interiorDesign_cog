@@ -11,7 +11,7 @@ from typing import List
 import numpy as np
 
 MODEL = "ducnapa/InteriorDesignSuperMixV2"
-PROMPT = "best quality,masterpiece,realistic,living room,Modern minimalist Nordic style,Soft light,Pure picture,Bright colors,Symmetrical composition"
+A_PROMPT = "best quality,masterpiece,realistic,living room,Modern minimalist Nordic style,Soft light,Pure picture,Bright colors,Symmetrical composition"
 N_PROMPT = "text,word,cropped,low quality,watermark,signature,blurry,soft,soft line,curved line,sketch,ugly,logo,pixelated,lowres,"
 
 class Predictor(BasePredictor):
@@ -21,24 +21,36 @@ class Predictor(BasePredictor):
     def predict(
         self,
         image: Path = Input(description="Input image"),
-        prompt: str = PROMPT,
-        num_samples: str = '1',
-        image_resolution: str = '512',
-        low_threshold: int = 100,
-        high_threshold: int = 200,
-        ddim_steps: int = 30,
-        scale: float = 7,
-        seed: int = -1,
-        eta: float = 0.0,
-        a_prompt: str ="best quality, extremely detailed",
-        n_prompt: str = N_PROMPT,
-        detect_resolution: int = 512,
+        prompt: str = Input(description="choose a color scheme",
+                            choices=["RED", "ORANGE", "GREEN", "BEIGE"],
+                            default="RED"
+                        ),
+        #num_samples: str = '1',
+        #image_resolution: str = '512',
+        #low_threshold: int = 100,
+        #high_threshold: int = 200,
+        #ddim_steps: int = 30,
+        #scale: float = 7,
+        #seed: int = -1,
+        #eta: float = 0.0,
+        #a_prompt: str ="best quality, extremely detailed",
+        #n_prompt: str = N_PROMPT,
+        #detect_resolution: int = 512,
         # bg_threshold: float = Input(description="Background Threshold (only applicable when model type is 'normal')", default=0.0, ge=0.0, le=1.0), # only applicable when model type is 'normal'
         # value_threshold: float = Input(description="Value Threshold (only applicable when model type is 'MLSD')", default=0.1, ge=0.01, le=2.0), # only applicable when model type is 'MLSD'
         # distance_threshold: float = Input(description="Distance Threshold (only applicable when model type is 'MLSD')", default=0.1, ge=0.01, le=20.0), # only applicable when model type is 'MLSD'
     ) -> List[Path]:
         """Run a single prediction on the model"""
 
+        num_samples = '1'
+        image_resolution = '512'
+        low_threshold: int = 100,
+        high_threshold: int = 200,
+        ddim_steps: int = 30,
+        scale: float = 7,
+        seed: int = -1,
+        a_prompt: str = A_PROMPT,
+        n_prompt: str = N_PROMPT,
         input_image = Image.open(image)
         input_image = np.array(input_image)        
 
