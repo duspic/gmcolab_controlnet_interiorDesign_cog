@@ -31,7 +31,7 @@ class Predictor(BasePredictor):
         high_threshold: int = 200,
         #ddim_steps: int = 30,
         #scale: float = 7,
-        #seed: int = -1,
+        seed: int = -1,
         #eta: float = 0.0,
         #a_prompt: str ="best quality, extremely detailed",
         #n_prompt: str = N_PROMPT,
@@ -46,7 +46,6 @@ class Predictor(BasePredictor):
         image_resolution = '512'
         ddim_steps = 30,
         scale = 7,
-        seed:int = -1,
         a_prompt = A_PROMPT,
         n_prompt = N_PROMPT,
         input_image = Image.open(image)
