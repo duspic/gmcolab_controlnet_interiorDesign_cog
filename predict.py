@@ -44,13 +44,13 @@ class Predictor(BasePredictor):
 
         num_samples = '1'
         image_resolution = '512'
-        low_threshold: int = 100,
-        high_threshold: int = 200,
-        ddim_steps: int = 30,
-        scale: float = 7,
-        seed: int = -1,
-        a_prompt: str = A_PROMPT,
-        n_prompt: str = N_PROMPT,
+        low_threshold = 100,
+        high_threshold = 200,
+        ddim_steps = 30,
+        scale = 7,
+        seed = -1,
+        a_prompt = A_PROMPT,
+        n_prompt = N_PROMPT,
         input_image = Image.open(image)
         input_image = np.array(input_image)        
 
