@@ -44,8 +44,8 @@ class Predictor(BasePredictor):
 
         num_samples = '1'
         image_resolution = '512'
-        low_threshold = 100,
-        high_threshold = 200,
+        low_threshold = int(100),
+        high_threshold = int(200),
         ddim_steps = 30,
         scale = 7,
         seed = -1,
