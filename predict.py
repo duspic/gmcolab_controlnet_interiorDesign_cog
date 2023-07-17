@@ -21,37 +21,23 @@ class Predictor(BasePredictor):
     def predict(
         self,
         image: Path = Input(description="Input image"),
-        prompt: str = Input(description="choose a color scheme",
+        dominant_color: str = Input(description="choose a color scheme",
                             choices=["RED", "ORANGE", "GREEN", "BEIGE"],
                             default="RED"
                         ),
-        #num_samples: str = '1',
-        #image_resolution: str = '512',
-        #low_threshold: int = 100,
-        #high_threshold: int = 200,
-        #ddim_steps: int = 30,
-        #scale: float = 7,
-        #seed: int = -1,
-        #eta: float = 0.0,
-        #a_prompt: str ="best quality, extremely detailed",
-        #n_prompt: str = N_PROMPT,
-        #detect_resolution: int = 512,
-        # bg_threshold: float = Input(description="Background Threshold (only applicable when model type is 'normal')", default=0.0, ge=0.0, le=1.0), # only applicable when model type is 'normal'
-        # value_threshold: float = Input(description="Value Threshold (only applicable when model type is 'MLSD')", default=0.1, ge=0.01, le=2.0), # only applicable when model type is 'MLSD'
-        # distance_threshold: float = Input(description="Distance Threshold (only applicable when model type is 'MLSD')", default=0.1, ge=0.01, le=20.0), # only applicable when model type is 'MLSD'
+        house_plants: str = Input(choices=['YES', 'NO'],
+                                  default='YES')
+        
+
     ) -> List[Path]:
         """Run a single prediction on the model"""
 
-        #num_samples = '1'
-        #image_resolution = '512'
-        #ddim_steps = 30,
-        #scale = 7,
-        #seed:int = -1,
-        #a_prompt = A_PROMPT,
-        #n_prompt = N_PROMPT,
         input_image = Image.open(image)
         input_image = np.array(input_image)        
 
+        prompt = dominant_color
+        if house_plants == 'YES':
+            prompt = f"{prompt}, house plants"
         outputs = self.model.process_canny(
             input_image,
             prompt,
