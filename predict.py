@@ -27,11 +27,11 @@ class Predictor(BasePredictor):
                         ),
         #num_samples: str = '1',
         #image_resolution: str = '512',
-        low_threshold: int = 100,
-        high_threshold: int = 200,
+        #low_threshold: int = 100,
+        #high_threshold: int = 200,
         #ddim_steps: int = 30,
         #scale: float = 7,
-        seed: int = -1,
+        #seed: int = -1,
         #eta: float = 0.0,
         #a_prompt: str ="best quality, extremely detailed",
         #n_prompt: str = N_PROMPT,
@@ -42,27 +42,28 @@ class Predictor(BasePredictor):
     ) -> List[Path]:
         """Run a single prediction on the model"""
 
-        num_samples = '1'
-        image_resolution = '512'
-        ddim_steps = 30,
-        scale = 7,
-        a_prompt = A_PROMPT,
-        n_prompt = N_PROMPT,
+        #num_samples = '1'
+        #image_resolution = '512'
+        #ddim_steps = 30,
+        #scale = 7,
+        #seed:int = -1,
+        #a_prompt = A_PROMPT,
+        #n_prompt = N_PROMPT,
         input_image = Image.open(image)
         input_image = np.array(input_image)        
 
         outputs = self.model.process_canny(
             input_image,
             prompt,
-            a_prompt,
-            n_prompt,
-            int(num_samples),
-            image_resolution,
-            ddim_steps,
-            scale,
-            seed,
-            low_threshold,
-            high_threshold
+            #a_prompt,
+            #n_prompt,
+            #int(num_samples),
+            #image_resolution,
+            #ddim_steps,
+            #scale,
+            #seed,
+            #low_threshold,
+            #high_threshold
         )
 
 

@@ -14,6 +14,10 @@ from diffusers import (ControlNetModel, DiffusionPipeline,
                        UniPCMultistepScheduler, DEISMultistepScheduler,
                        EulerAncestralDiscreteScheduler)
 
+A_PROMPT = "best quality,masterpiece,realistic,living room,Modern minimalist Nordic style,Soft light,Pure picture,Bright colors,Symmetrical composition"
+N_PROMPT = "text,word,cropped,low quality,watermark,signature,blurry,soft,soft line,curved line,sketch,ugly,logo,pixelated,lowres,"
+
+
 CONTROLNET_MODEL_IDS = {
     'Openpose': 'lllyasviel/control_v11p_sd15_openpose',
     'canny': 'lllyasviel/control_v11p_sd15_canny',
@@ -139,15 +143,15 @@ class Model:
         self,
         image: np.ndarray,
         prompt: str,
-        additional_prompt: str,
-        negative_prompt: str,
-        num_images: int,
-        image_resolution: int,
-        num_steps: int,
-        guidance_scale: float,
-        seed: int,
-        low_threshold: int,
-        high_threshold: int,
+        additional_prompt: str = A_PROMPT,
+        negative_prompt: str = N_PROMPT,
+        num_images: int = 1,
+        image_resolution: int = 512,
+        num_steps: int = 30,
+        guidance_scale: float = 7.9,
+        seed: int = -1,
+        low_threshold: int = 100,
+        high_threshold: int = 200,
     ) -> list[PIL.Image.Image]:
         img = resize_image(HWC3(image), image_resolution)
         H, W, C = img.shape
