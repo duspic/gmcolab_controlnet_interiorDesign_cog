@@ -32,21 +32,14 @@ class Predictor(BasePredictor):
                                         'kitchen',
                                         'bathroom']
                                ),
-        mode: str = Input(description="Do you want to restyle it or change the furniture?",
-                        default="restyle",
-                        choices=['restyle', 'change furniture'],
-                        )
     
     ) -> List[Path]:
         """Run a single prediction on the model"""
 
+        similarity = 1.0
+    
         input_image = Image.open(image)
         input_image = np.array(input_image)        
-
-        if mode == 'restyle':
-            similarity = 0.5
-        else:
-            similarity = 1.0
 
         a_prompt = f"{room_type},Modern {style} style,Soft light,Pure picture,Bright colors,Symmetrical composition"
         prompt = "best quality,masterpiece,realistic,"
