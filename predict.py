@@ -10,6 +10,8 @@ from PIL import Image
 from typing import List
 import numpy as np
 
+from utils import style_to_prompt
+
 MODEL = "ducnapa/InteriorDesignSuperMixV2"
 N_PROMPT = "text,word,cropped,low quality,watermark,signature,blurry,soft,soft line,curved line,sketch,ugly,logo,pixelated,lowres,"
 
@@ -22,9 +24,9 @@ class Predictor(BasePredictor):
         image: Path = Input(description="Input image"),
         style: str = Input(description="Select a style",
                            choices=['scandinavian',
-                                    'ikea',
-                                    'minimalist',
-                                    'luxurious'],
+                                    'luxurious',
+                                    'bohemian',
+                                    'tropical'],
                            default="scandinavian"
                            ),
         room_type: str = Input(description="Select a room type",
@@ -42,6 +44,8 @@ class Predictor(BasePredictor):
     
         input_image = Image.open(image)
         input_image = np.array(input_image)        
+
+        style = style_to_prompt(style)
 
         a_prompt = f"{room_type},Modern {style} style,Soft light,Pure picture,Bright colors,Symmetrical composition"
         prompt = "best quality,masterpiece,realistic,"
