@@ -26,7 +26,7 @@ class Predictor(BasePredictor):
                            choices=['scandinavian',
                                     'rustic',
                                     'bohemian',
-                                    'tropical'],
+                                    'industrial'],
                            default="scandinavian"
                            ),
         room_type: str = Input(description="Select a room type",
