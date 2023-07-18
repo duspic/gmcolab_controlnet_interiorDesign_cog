@@ -67,6 +67,7 @@ class Model:
             base_model_id,
             safety_checker=None,
             controlnet=controlnet,
+            controlnet_conditioning_scale=0.7
             # torch_dtype=torch.float16
             )
         pipe.scheduler = EulerAncestralDiscreteScheduler.from_config(
