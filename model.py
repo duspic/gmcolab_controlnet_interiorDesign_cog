@@ -67,7 +67,6 @@ class Model:
             base_model_id,
             safety_checker=None,
             controlnet=controlnet,
-            controlnet_conditioning_scale=0.7
             # torch_dtype=torch.float16
             )
         pipe.scheduler = EulerAncestralDiscreteScheduler.from_config(
@@ -127,6 +126,7 @@ class Model:
         num_steps: int,
         guidance_scale: float,
         seed: int,
+        controlnet_conditioning_scale: int = 0.5,
     ) -> list[PIL.Image.Image]:
         if seed == -1:
             seed = np.random.randint(0, np.iinfo(np.int64).max)
@@ -137,7 +137,9 @@ class Model:
                          num_images_per_prompt=num_images,
                          num_inference_steps=num_steps,
                          generator=generator,
-                         image=control_image).images
+                         image=control_image,
+                         controlnet_conditioning_scale=controlnet_conditioning_scale
+                         ).images
 
     @torch.inference_mode()
     def process_canny(
