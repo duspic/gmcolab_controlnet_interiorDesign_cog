@@ -24,7 +24,7 @@ class Predictor(BasePredictor):
         image: Path = Input(description="Input image"),
         style: str = Input(description="Select a style",
                            choices=['scandinavian',
-                                    'luxurious',
+                                    'rustic',
                                     'bohemian',
                                     'tropical'],
                            default="scandinavian"
@@ -47,7 +47,7 @@ class Predictor(BasePredictor):
 
         style = style_to_prompt(style)
 
-        a_prompt = f"{room_type},Modern {style} style,Soft light,Pure picture,Bright colors,Symmetrical composition"
+        a_prompt = f"{room_type},{style},Soft light,Pure picture,Bright colors,Symmetrical composition"
         prompt = "best quality,masterpiece,realistic,"
         outputs = self.model.process_canny(
             input_image,
