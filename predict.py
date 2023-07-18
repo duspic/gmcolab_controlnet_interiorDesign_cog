@@ -11,7 +11,6 @@ from typing import List
 import numpy as np
 
 MODEL = "ducnapa/InteriorDesignSuperMixV2"
-A_PROMPT = "best quality,masterpiece,realistic,living room,Modern minimalist Nordic style,Soft light,Pure picture,Bright colors,Symmetrical composition"
 N_PROMPT = "text,word,cropped,low quality,watermark,signature,blurry,soft,soft line,curved line,sketch,ugly,logo,pixelated,lowres,"
 
 class Predictor(BasePredictor):
@@ -21,13 +20,22 @@ class Predictor(BasePredictor):
     def predict(
         self,
         image: Path = Input(description="Input image"),
-        dominant_color: str = Input(description="choose a color scheme",
-                            choices=["RED", "ORANGE", "GREEN", "BEIGE"],
-                            default="RED"
-                        ),
-        similarity: float = Input(description="Furniture similarity",
-                                  default="1.0",
-                                  ge=0.1, le=1.0),
+        style: str = Input(description="Select a style",
+                           choices=['scandinavian',
+                                    'ikea',
+                                    'minimalist',
+                                    'luxurious']
+                           ),
+        room_type: str = Input(description="Select a room type",
+                               choices=['living room',
+                                        'bedroom',
+                                        'kitchen',
+                                        'bathroom']
+                               ),
+        mode: str = Input(description="Do you want to restyle it or change the furniture?",
+                        default="restyle",
+                        choices=['restyle', 'change furniture'],
+                        )
     
     ) -> List[Path]:
         """Run a single prediction on the model"""
@@ -35,12 +43,18 @@ class Predictor(BasePredictor):
         input_image = Image.open(image)
         input_image = np.array(input_image)        
 
-        prompt = dominant_color
+        if mode == 'restyle':
+            similarity = 0.5
+        else:
+            similarity = 1.0
+
+        a_prompt = f"{room_type},Modern {style} style,Soft light,Pure picture,Bright colors,Symmetrical composition"
+        prompt = "best quality,masterpiece,realistic,"
         outputs = self.model.process_canny(
             input_image,
             prompt,
             similarity=similarity,
-            #a_prompt,
+            a_prompt=a_prompt,
             #n_prompt,
             #int(num_samples),
             #image_resolution,
