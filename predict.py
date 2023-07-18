@@ -24,13 +24,15 @@ class Predictor(BasePredictor):
                            choices=['scandinavian',
                                     'ikea',
                                     'minimalist',
-                                    'luxurious']
+                                    'luxurious'],
+                           default="scandinavian"
                            ),
         room_type: str = Input(description="Select a room type",
                                choices=['living room',
                                         'bedroom',
                                         'kitchen',
-                                        'bathroom']
+                                        'bathroom'],
+                               default="living room"
                                ),
     
     ) -> List[Path]:
