@@ -155,6 +155,7 @@ class Model:
         seed: int = 1,
         low_threshold: int = 100,
         high_threshold: int = 200,
+        similarity: float = 1.0,
     ) -> list[PIL.Image.Image]:
         img = resize_image(HWC3(image), image_resolution)
         H, W, C = img.shape
@@ -175,5 +176,6 @@ class Model:
             num_steps=num_steps,
             guidance_scale=guidance_scale,
             seed=seed,
+            controlnet_conditioning_scale=similarity
         )
         return results

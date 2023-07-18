@@ -25,6 +25,9 @@ class Predictor(BasePredictor):
                             choices=["RED", "ORANGE", "GREEN", "BEIGE"],
                             default="RED"
                         ),
+        similarity: float = Input(description="Furniture similarity",
+                                  default="1.0",
+                                  ge=0.1, le=1.0),
     
     ) -> List[Path]:
         """Run a single prediction on the model"""
@@ -36,6 +39,7 @@ class Predictor(BasePredictor):
         outputs = self.model.process_canny(
             input_image,
             prompt,
+            similarity=similarity,
             #a_prompt,
             #n_prompt,
             #int(num_samples),
